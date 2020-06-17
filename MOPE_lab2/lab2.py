@@ -1,3 +1,6 @@
+from datetime import datetime
+
+
 def generate_matrix():
     from random import randrange
     matrix_with_y = [[randrange(y_min, y_max) for y in range(m)] for x in range(3)]
@@ -117,6 +120,7 @@ while True:
     Fuv = find_Fuv(dispersion)
     dispersion_uv = find_dispersion_uv(Fuv)
     Ruv = find_Ruv(dispersion_uv, deviation)
+    start_time = datetime.now()
     if p <= 0.925:
         Rkr = find_Rkr(dict_p90)
     elif 0.925 < p == 0.975:
@@ -125,6 +129,8 @@ while True:
         Rkr = find_Rkr(dict_p98)
     else:
         Rkr = find_Rkr(dict_p99)
+    print(
+        'Час перевірки за критерієм Романовського ' + str((datetime.now() - start_time).microseconds) + ' microseconds')
     if Ruv[0] < Rkr and Ruv[1] < Rkr and Ruv[2] < Rkr:
         break
     else:
@@ -169,7 +175,7 @@ a2 = b2 / delta_x2
 
 # ______________________________PRINTING OUT TIME______________________________ #
 
-print("(ಠ‿ಠ)﻿"*8)
+print("(ಠ‿ಠ)﻿" * 8)
 print("—" * 50)
 print("Матриця з у-ків")
 for i in range(len(matrix)):
@@ -181,17 +187,17 @@ print("—" * 50)
 
 print("Середні значення ȳi:")
 for i in range(3):
-    print("\tȳ"+str(i)+" = {:.3f}".format(average[i]))
+    print("\tȳ" + str(i) + " = {:.3f}".format(average[i]))
 print("—" * 50)
 
 print("Дисперсії по рядках:")
 for i in range(3):
-    print("\tσ{y"+str(i)+"}" + " = {:.3f}".format(dispersion[i]))
+    print("\tσ{y" + str(i) + "}" + " = {:.3f}".format(dispersion[i]))
 print("—" * 50)
 
 print("Ruv:")
 for i in range(3):
-    print("\tRuv"+str(i)+" = {:.3f}".format(Ruv[0]))
+    print("\tRuv" + str(i) + " = {:.3f}".format(Ruv[0]))
 print("—" * 50)
 
 print("Нормоване рівняння регресії:\n\tŷ = {:.3f} + {:.3f}*X1 + {:.3f}*X2".format(b0, b1, b2))
@@ -205,9 +211,9 @@ print("Натуралізоване рівняння регресії:\n\tŷ = {
 print("\nЗробимо перевірку по рядкам:\n\t{:.3f} + {:.3f}*{:.3f} + {:.3f}*{:.3f} = "
       "{:.3f}".format(a0, a1, x1_min, a2, x2_max, a0 + a1 * x1_min + a2 * x2_min))
 print("\t{:.3f} + {:.3f}*{:.3f} + {:.3f}*{:.3f} = {:.3f}".format(a0, a1, x1_max, a2, x2_min,
-                                                                a0 + a1 * x1_max + a2 * x2_min))
+                                                                 a0 + a1 * x1_max + a2 * x2_min))
 print("\t{:.3f} + {:.3f}*{:.3f} + {:.3f}*{:.3f} = {:.3f}".format(a0, a1, x1_min, a2, x2_max,
-                                                                a0 + a1 * x1_min + a2 * x2_max))
+                                                                 a0 + a1 * x1_min + a2 * x2_max))
 print("\nКоефіцієнти натуралізованого рівняння регресії вірні.")
 print("—" * 50)
-print("(◕‿◕)♡"*7)
+print("(◕‿◕)♡" * 7)
